@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  api_gateway:
+    build: ./api_gateway
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./api_gateway/.env
+    depends_on:
+      - auth_service
+  auth_service:
+    build:
+      context: ./auth_service
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./auth_service:/app"
+    environment:
+      - DEBUG=True
