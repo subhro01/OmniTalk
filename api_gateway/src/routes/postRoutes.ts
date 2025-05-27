@@ -1,6 +1,6 @@
 import { createProxyMiddleware, Options } from 'http-proxy-middleware';
 import express from 'express';
-import { IncomingMessage, ServerResponse } from 'http';
+import { verifyToken } from '../middleware/verifyToken';
 
 
 const router = express.Router();
@@ -11,6 +11,7 @@ const proxyOptions: Options = {
     changeOrigin: true
 }
 
+router.use('/posts', verifyToken);
 router.use('/posts', createProxyMiddleware(proxyOptions))
 
 export default router;
